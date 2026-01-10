@@ -7,5 +7,5 @@ export default defineConfig({
   // If you are deploying to https://<USERNAME>.github.io/<REPO>/
   // Set base to '/<REPO>/'
   // Example: base: '/stats-learning-app/',
-  base: process.env.VITE_BASE_PATH || '/',
+  base: '/my-stats-course/',
 })
