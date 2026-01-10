@@ -1,31 +1,43 @@
 :root {
-  /* Sidebar / Dark Theme Colors */
-  --sidebar-bg: #1e293b;
-  /* Slate 800 */
-  --sidebar-text: #94a3b8;
-  /* Slate 400 */
-  --sidebar-text-active: #ffffff;
-  --sidebar-accent: #3b82f6;
-  /* Blue 500 */
+  /* Theme: Light & Fresh (Mint/Emerald Focus) */
 
-  /* Main Content / Light Theme Colors */
+  /* Sidebar */
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #f1f5f9;
+  --sidebar-text: #64748b;
+  /* Slate 500 */
+  --sidebar-text-active: #0f172a;
+  /* Slate 900 */
+  --sidebar-hover: #f8fafc;
+
+  /* Main Content */
   --main-bg: #f8fafc;
   /* Slate 50 */
   --card-bg: #ffffff;
-  --text-main: #0f172a;
+  --text-main: #334155;
+  /* Slate 700 */
+  --text-heading: #0f172a;
   /* Slate 900 */
-  --text-muted: #64748b;
-  /* Slate 500 */
-  --border-color: #e2e8f0;
-  /* Slate 200 */
+  --text-muted: #94a3b8;
+  /* Slate 400 */
 
-  /* Accents */
-  --brand-primary: #2563eb;
-  /* Blue 600 */
-  --brand-secondary: #0ea5e9;
-  /* Sky 500 */
+  /* Brand Colors - Going for a distinct Teal/Coral vibe */
+  --brand-primary: #0d9488;
+  /* Teal 600 */
+  --brand-light: #ccfbf1;
+  /* Teal 100 */
+  --brand-accent: #f43f5e;
+  /* Rose 500 */
 
-  /* Spacing */
+  /* UI Elements */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-soft: 0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.01);
+
   --sidebar-width: 280px;
 }
 
@@ -36,24 +48,30 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  /* Cleaner, friendlier font stack if available, falling back to Inter */
   background-color: var(--main-bg);
   color: var(--text-main);
   line-height: 1.6;
 }
 
-/* Scrollbar styling for the sidebar */
-.custom-scroll::-webkit-scrollbar {
+/* Custom Scrollbar */
+::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 
-.custom-scroll::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.custom-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
   border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 .layout-wrapper {
@@ -66,37 +84,54 @@ body {
   background: var(--main-bg);
   min-height: 100vh;
   margin-left: var(--sidebar-width);
-  /* Push content right */
 }
 
-/* Typography styles matching the clean SaaS look */
-h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text-main);
-  background: none;
-  -webkit-background-clip: unset;
-  -webkit-text-fill-color: unset;
-}
-
+h1,
 h2,
-h3 {
-  color: var(--text-main);
+h3,
+h4 {
+  color: var(--text-heading);
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 1.5rem;
   font-weight: 700;
 }
 
-.tab-active {
-  color: var(--brand-primary);
-  border-bottom: 2px solid var(--brand-primary);
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: 1px solid transparent;
 }
 
-.tab-inactive {
-  color: var(--text-muted);
-  border-bottom: 2px solid transparent;
+.btn-primary {
+  background-color: var(--brand-primary);
+  color: white;
+  box-shadow: 0 4px 14px 0 rgba(13, 148, 136, 0.39);
 }
 
-.tab-inactive:hover {
-  color: var(--text-main);
-  border-bottom: 2px solid var(--border-color);
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px 0 rgba(13, 148, 136, 0.23);
+  background-color: #0f766e;
+  /* Teal 700 */
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
 }
