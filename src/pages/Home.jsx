@@ -2,13 +2,17 @@ import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { curriculum } from '../data/curriculum';
-import { Map, Flag, ChevronRight, Lock } from 'lucide-react';
+import { CheckCircle, Circle, PlayCircle, Lock, Trophy, ArrowRight } from 'lucide-react';
 
 const Home = () => {
+    // Calculate progress stats
+    const totalDays = curriculum.length;
+    // In a real app, we'd pull this from user state/localstorage
+    const progress = 0;
+
     const phases = useMemo(() => {
         const groups = {};
         curriculum.forEach(day => {
-            // Parse "1. The Detective" to just "Act I: The Detective"
             const simplePhase = day.phase;
             if (!groups[simplePhase]) groups[simplePhase] = [];
             groups[simplePhase].push(day);
@@ -16,106 +20,72 @@ const Home = () => {
         return groups;
     }, []);
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: { staggerChildren: 0.1 }
-        }
-    };
-
     return (
-        <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-            className="max-w-3xl mx-auto pb-20 relative"
-        >
-            {/* Hero Section */}
-            <div className="text-center mb-24 pt-10">
-                <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.8 }}
-                    className="inline-block p-4 rounded-full bg-[var(--accent-primary)]/10 mb-6 border border-[var(--accent-primary)]/20 shadow-[0_0_30px_rgba(56,189,248,0.2)]"
-                >
-                    <Map size={48} className="text-[var(--accent-primary)]" />
-                </motion.div>
-                <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-                    The Data <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)]">
-                        Detective's Path
-                    </span>
-                </h1>
-                <p className="text-xl text-[var(--text-secondary)] max-w-xl mx-auto mb-8">
-                    60 Days. From clueless to capable.
-                    <br />Your journey through the underworld of statistics.
-                </p>
-                <Link to="/day/1" className="btn btn-primary text-lg px-8 py-4">
-                    Start Day 1 <ChevronRight className="ml-2" />
-                </Link>
-            </div>
+        <div className="p-8 max-w-6xl mx-auto">
+            {/* Dashboard Header */}
+            <div className="mb-12">
+                <h1 className="text-3xl font-bold text-slate-900 mb-2">Welcome back, Student.</h1>
+                <p className="text-slate-500 text-lg">You are on the path to statistical mastery.</p>
 
-            {/* Vertical Timeline Line */}
-            <div className="absolute left-[1.5rem] md:left-1/2 top-[400px] bottom-0 w-px bg-gradient-to-b from-[var(--accent-primary)] via-[var(--glass-border)] to-transparent opacity-50"></div>
+                {/* Progress Card */}
+                <div className="mt-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 text-white shadow-xl relative overflow-hidden">
+                    <div className="absolute right-0 top-0 h-full w-1/2 bg-white/5 skew-x-12 transform translate-x-20"></div>
 
-            {/* Timeline Items */}
-            <div className="space-y-24 relative z-10">
-                {Object.entries(phases).map(([phaseName, days], phaseIndex) => (
-                    <div key={phaseName} className="relative">
-                        {/* Phase Header */}
-                        <div className="sticky top-24 z-20 flex justify-center mb-12">
-                            <div className="bg-[var(--bg-primary)]/90 backdrop-blur-xl border border-[var(--glass-border)] px-6 py-2 rounded-full shadow-2xl text-[var(--accent-secondary)] font-bold text-sm tracking-wider uppercase flex items-center gap-2">
-                                <Flag size={16} />
-                                {phaseName}
-                            </div>
+                    <div className="relative z-10 flex flex-col md:flex-row justify-between md:items-end gap-6">
+                        <div>
+                            <div className="text-blue-200 font-semibold mb-1 uppercase tracking-wider text-xs">Current Progress</div>
+                            <div className="text-4xl font-bold mb-2">Day 1 <span className="text-blue-300 text-2xl font-normal">/ 60</span></div>
+                            <p className="text-blue-100 max-w-md">Your journey begins now. Complete Day 1 to unlock the next steps.</p>
                         </div>
 
-                        <div className="space-y-4">
-                            {days.map((day, index) => {
-                                const isLeft = index % 2 === 0;
-                                return (
-                                    <motion.div
-                                        key={day.day}
-                                        className={`md:flex items-center justify-between gap-8 ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}
-                                        whileHover={{ scale: 1.02 }}
-                                    >
-                                        {/* Timeline Node */}
-                                        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[var(--bg-primary)] border-2 border-[var(--accent-primary)] z-10 shadow-[0_0_10px_var(--accent-primary)]"></div>
+                        <Link to="/day/1" className="bg-white text-blue-600 px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl hover:bg-blue-50 transition-all flex items-center gap-2">
+                            <PlayCircle size={20} /> Resume Learning
+                        </Link>
+                    </div>
+                </div>
+            </div>
 
-                                        {/* Content Card */}
-                                        <Link to={`/day/${day.day}`} className="block flex-1 pl-12 md:pl-0">
-                                            <div className={`glass-panel p-6 hover:border-[var(--accent-primary)]/50 transition-colors relative group ${isLeft ? 'md:text-right' : 'md:text-left'}`}>
+            {/* Grid of Phases */}
+            <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <Trophy className="text-yellow-500" size={24} /> Your Roadmap
+            </h2>
 
-                                                {/* Mobile Timeline Node */}
-                                                <div className="md:hidden absolute left-[-2.45rem] top-8 w-4 h-4 rounded-full bg-[var(--bg-primary)] border-2 border-[var(--accent-primary)] z-10"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Object.entries(phases).map(([phaseName, days], i) => (
+                    <div key={phaseName} className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full">
+                        <div className="h-2 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+                        <div className="p-6 flex-1 flex flex-col">
+                            <div className="text-xs font-bold text-blue-600 uppercase tracking-widest mb-2">Phase {i + 1}</div>
+                            <h3 className="text-lg font-bold text-slate-900 mb-4">{phaseName.replace(/^\d+\.\s/, '')}</h3>
+                            <p className="text-slate-500 text-sm mb-6 flex-1">
+                                Mastering the core concepts of {days[0].title.split(':')[0]} and beyond.
+                            </p>
 
-                                                <div className="text-[10px] uppercase tracking-widest text-[var(--accent-primary)] mb-1 font-mono">
-                                                    Day {day.day}
-                                                </div>
-                                                <h3 className="text-xl font-bold mb-2 group-hover:text-[var(--accent-primary)] transition-colors">
-                                                    {day.title}
-                                                </h3>
-                                                <p className="text-[var(--text-secondary)] text-sm line-clamp-2">
-                                                    {day.summary}
-                                                </p>
-                                            </div>
-                                        </Link>
+                            <div className="text-xs text-slate-400 font-mono mb-4">
+                                {days.length} Lessons • 0% Complete
+                            </div>
 
-                                        {/* Spacer for the other side */}
-                                        <div className="hidden md:block flex-1"></div>
-                                    </motion.div>
-                                );
-                            })}
+                            <div className="space-y-2 border-t border-slate-100 pt-4">
+                                {days.slice(0, 3).map(day => (
+                                    <div key={day.day} className="flex items-center gap-3 text-sm text-slate-600">
+                                        {day.day === 1 ? <CheckCircle size={16} className="text-blue-500" /> : <Circle size={16} className="text-slate-300" />}
+                                        <span className="truncate">{day.title}</span>
+                                    </div>
+                                ))}
+                                {days.length > 3 && (
+                                    <div className="text-xs text-slate-400 pl-7">+ {days.length - 3} more lessons</div>
+                                )}
+                            </div>
+
+                            <Link to={`/day/${days[0].day}`} className="mt-6 w-full py-2 rounded-lg border border-slate-200 text-center text-sm font-semibold text-slate-600 hover:border-blue-500 hover:text-blue-600 transition-colors">
+                                View Phase
+                            </Link>
                         </div>
                     </div>
                 ))}
             </div>
 
-            <div className="text-center pt-20 pb-10">
-                <p className="text-[var(--text-secondary)]">To be continued...</p>
-            </div>
-        </motion.div>
+        </div>
     );
 };
 
