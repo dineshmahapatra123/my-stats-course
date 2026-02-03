@@ -1,96 +1,48 @@
-:root {
-  /* Sidebar - Deep Dark Theme */
-  --sidebar-bg: #1c1f2e;
-  /* Dark Navy/Black */
-  --sidebar-text: #94a3b8;
-  /* Muted Blue-Grey */
-  --sidebar-text-active: #ffffff;
-  --sidebar-hover: rgba(255, 255, 255, 0.05);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  /* Main Content - Light Grey Background */
-  --main-bg: #f3f4f6;
-  /* Very light grey */
-  --card-bg: #ffffff;
-  --text-main: #1f2937;
-  /* Dark Grey */
-  --text-primary: #111827;
-  /* Near Black */
-  --text-muted: #6b7280;
-  /* Grey */
+@layer base {
+  :root {
+    --sidebar-width: 280px;
+    --brand-primary: #3b82f6;
+    --brand-light: #eff6ff;
+  }
+  
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans antialiased;
+  }
 
-  /* Brand/Accent Colors */
-  --accent-blue: #3b82f6;
-  /* Bright Blue */
-  --accent-cyan: #06b6d4;
-  /* Cyan */
-  --hero-gradient: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
-  /* Deep Indigo */
-
-  /* Dimensions & Spacing */
-  --sidebar-width: 260px;
-  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --card-hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all active:scale-95;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
 }
 
-body {
-  font-family: 'Inter', -apple-system, sans-serif;
-  background-color: var(--main-bg);
-  color: var(--text-main);
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
-
-/* Custom Scrollbar for Sidebar */
-.sidebar-scroll::-webkit-scrollbar {
-  width: 5px;
-}
-
-.sidebar-scroll::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: transparent;
 }
-
-.sidebar-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full;
 }
-
-.layout-wrapper {
-  display: flex;
-  min-height: 100vh;
-}
-
-.main-content {
-  flex: 1;
-  background: var(--main-bg);
-  min-height: 100vh;
-  margin-left: var(--sidebar-width);
-}
-
-h1,
-h2,
-h3,
-h4 {
-  color: var(--text-primary);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-}
-
-.btn-hero {
-  background: white;
-  color: #1e1b4b;
-  font-weight: 700;
-  padding: 0.75rem 1.5rem;
-  border-radius: 9999px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: transform 0.2s;
-}
-
-.btn-hero:hover {
-  transform: translateY(-2px);
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-300;
 }

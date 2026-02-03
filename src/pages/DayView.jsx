@@ -4,8 +4,8 @@ import { curriculum } from '../data/curriculum';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     ArrowLeft, ChevronRight, ChevronLeft,
-    BookOpen, Zap, Compass, Copy, Check, CheckCircle2,
-    Terminal
+    BookOpen, Zap, Compass, Copy, Check, Terminal,
+    Lightbulb
 } from 'lucide-react';
 
 const DayView = () => {
@@ -34,7 +34,6 @@ const DayView = () => {
         } else {
             localStorage.setItem(`day-${dayNum}-completed`, 'true');
             setCompleted(true);
-            // Optional: Auto-advance could be added here
         }
     };
 
@@ -44,155 +43,176 @@ const DayView = () => {
         setTimeout(() => setCopied(false), 2000);
     };
 
-    if (!day) return <div className="p-10">Day not found</div>;
+    if (!day) return <div className="p-10 text-center text-slate-500">Day not found</div>;
 
     return (
-        <div className="max-w-4xl mx-auto px-6 py-10 pb-32"> {/* Added heavy padding bottom for sticky footer */}
+        <div className="pb-32"> {/* Content padding for footer */}
 
-            {/* 1. Header Navigation */}
-            <div className="flex items-center justify-between mb-8">
-                <Link to="/" className="flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-[var(--brand-primary)] transition-colors">
-                    <ArrowLeft size={16} /> Dashboard
+            {/* Top Navigation Bar */}
+            <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+                <Link to="/" className="flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors">
+                    <ArrowLeft size={16} /> Back to Dashboard
                 </Link>
                 <div className="flex gap-2">
                     <button
                         onClick={() => hasPrev && navigate(`/day/${dayNum - 1}`)}
                         disabled={!hasPrev}
-                        className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:border-slate-300 hover:text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                        className="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:border-slate-300 hover:text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all bg-white"
+                        title="Previous Lesson"
                     >
                         <ChevronLeft size={16} />
                     </button>
                     <button
                         onClick={() => hasNext && navigate(`/day/${dayNum + 1}`)}
                         disabled={!hasNext}
-                        className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:border-slate-300 hover:text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                        className="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:border-slate-300 hover:text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all bg-white"
+                        title="Next Lesson"
                     >
                         <ChevronRight size={16} />
                     </button>
                 </div>
             </div>
 
-            {/* 2. Hero Title Area */}
-            <div className="mb-12 text-center">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wider mb-4 border border-slate-200">
-                    Day {day.day} • {day.phase}
-                </div>
-                <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
-                    {day.title}
-                </h1>
-                <p className="text-xl text-slate-500 max-w-2xl mx-auto font-light leading-relaxed">
-                    {day.summary}
-                </p>
-            </div>
+            <div className="max-w-4xl mx-auto px-6 py-10">
 
-            {/* 3. The "Cards" Layout - Very clean, distinct blocks */}
-            <div className="space-y-8">
-
-                {/* AI Action Card (Primary Learning Tool) */}
-                <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 md:p-10 text-white relative overflow-hidden shadow-2xl shadow-slate-200">
-                    {/* Decorative blurs */}
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--brand-primary)] opacity-20 blur-[80px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-
-                    <div className="relative z-10">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
-                            <div className="flex items-center gap-4">
-                                <div className="p-3 bg-white/10 rounded-xl backdrop-blur-sm border border-white/10">
-                                    <Terminal className="text-[var(--brand-light)]" size={24} />
-                                </div>
-                                <div>
-                                    <h2 className="text-2xl font-bold">AI Tutor Protocol</h2>
-                                    <p className="text-slate-400 text-sm">Run this prompt to start your interactive lesson.</p>
-                                </div>
-                            </div>
-
-                            <button
-                                onClick={handleCopy}
-                                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-[var(--brand-primary)] hover:bg-teal-500 text-white font-bold transition-all shadow-lg shadow-teal-900/20 active:scale-95"
-                            >
-                                {copied ? <Check size={18} /> : <Copy size={18} />}
-                                {copied ? "Copied!" : "Copy Prompt"}
-                            </button>
-                        </div>
-
-                        <div className="bg-black/30 rounded-2xl p-6 font-mono text-sm leading-relaxed text-blue-100 border border-white/5 shadow-inner">
-                            <span className="text-slate-500 mr-2">$</span>
-                            {day.ai_prompt}
-                            <span className="animate-pulse inline-block w-2 H-4 bg-blue-400 ml-1 align-middle"></span>
-                        </div>
+                {/* Hero Title Area */}
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-12"
+                >
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-wider mb-6 border border-blue-100">
+                        Day {day.day} • {day.phase}
                     </div>
-                </div>
+                    <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight tracking-tight">
+                        {day.title}
+                    </h1>
+                    <p className="text-xl text-slate-500 leading-relaxed font-light">
+                        {day.summary}
+                    </p>
+                </motion.div>
 
-                {/* Content Card */}
-                <div className="bg-white rounded-3xl p-8 md:p-10 border border-slate-100 shadow-sm relative">
-                    <div className="absolute top-0 left-8 -translate-y-1/2 bg-[var(--brand-light)] text-[var(--brand-primary)] p-3 rounded-xl border border-white shadow-sm">
-                        <BookOpen size={24} />
-                    </div>
+                {/* Main Content Layout */}
+                <div className="space-y-10">
 
-                    <div className="mt-4 prose prose-slate max-w-none prose-lg">
-                        {day.content ? <div dangerouslySetInnerHTML={{ __html: day.content }} /> : (
-                            <div className="space-y-4">
-                                <h3 className="text-2xl font-bold text-slate-800">Concept Overview</h3>
-                                <p className="text-slate-600 leading-relaxed">
-                                    To truly master <strong>{day.title}</strong>, we use a Socratic method. The AI prompt above is designed to act as a Professor, not just an encyclopedia.
-                                </p>
-                                <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
-                                    <h4 className="flex items-center gap-2 font-bold text-slate-800 mb-2">
-                                        <Compass size={20} className="text-rose-500" /> Key Takeaway
-                                    </h4>
-                                    <p className="text-slate-600 m-0">
-                                        {day.summary} Focus on understanding the *why* before the *how*.
-                                    </p>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-            </div>
-
-            {/* 4. Sticky Bottom Navigation Bar */}
-            <div className="fixed bottom-0 left-[var(--sidebar-width)] right-0 p-4 bg-white/80 backdrop-blur-lg border-t border-slate-100 flex items-center justify-between z-40 px-8">
-                <div className="text-sm text-slate-400 hidden md:block">
-                    {isCompleted ? "Lesson Completed" : "Mark as done to continue"}
-                </div>
-
-                <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-                    <button
-                        onClick={toggleComplete}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all ${isCompleted
-                                ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
-                            }`}
+                    {/* AI Prompt Card */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.1 }}
+                        className="bg-slate-900 rounded-2xl p-6 md:p-8 text-white relative overflow-hidden shadow-2xl shadow-blue-900/10 border border-slate-800"
                     >
-                        <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${isCompleted ? 'border-green-600 bg-green-600 text-white' : 'border-slate-300'}`}>
-                            {isCompleted && <Check size={12} />}
-                        </div>
-                        {isCompleted ? "Completed" : "Mark Complete"}
-                    </button>
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600 opacity-10 blur-[100px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
 
-                    {hasNext ? (
+                        <div className="relative z-10">
+                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">
+                                <div className="flex items-center gap-4">
+                                    <div className="p-3 bg-white/10 rounded-xl backdrop-blur-md border border-white/10">
+                                        <Terminal className="text-blue-300" size={24} />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-xl font-bold text-white">AI Tutor Protocol</h2>
+                                        <p className="text-slate-400 text-sm">Run this prompt to start your interactive lesson.</p>
+                                    </div>
+                                </div>
+
+                                <button
+                                    onClick={handleCopy}
+                                    className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold transition-all shadow-lg active:scale-95 text-sm"
+                                >
+                                    {copied ? <Check size={16} /> : <Copy size={16} />}
+                                    {copied ? "Copied to Clipboard" : "Copy Prompt"}
+                                </button>
+                            </div>
+
+                            <div className="bg-black/50 rounded-xl p-5 font-mono text-sm leading-relaxed text-blue-100 border border-white/5 shadow-inner">
+                                <span className="text-slate-500 select-none mr-3">$</span>
+                                {day.ai_prompt}
+                                <span className="animate-pulse inline-block w-2 h-4 bg-blue-500 ml-1 align-middle"></span>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* Lesson Content */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                        className="bg-white rounded-2xl p-8 md:p-12 border border-slate-100 shadow-sm"
+                    >
+                        {/* Icon Marker */}
+                        <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center mb-6">
+                            <BookOpen size={24} />
+                        </div>
+
+                        <div className="prose prose-slate prose-lg max-w-none">
+                            {day.content ? (
+                                <div dangerouslySetInnerHTML={{ __html: day.content }} />
+                            ) : (
+                                <>
+                                    <h3>Concept Deep Dive</h3>
+                                    <p>
+                                        To truly master <strong>{day.title}</strong>, we use a Socratic method. The AI prompt above is designed to act as a Professor, not just an encyclopedia.
+                                    </p>
+                                    <p>
+                                        Engage with the prompt. Ask follow-up questions from the perspective of a skeptic.
+                                    </p>
+
+                                    <div className="not-prose my-8 p-6 bg-slate-50 rounded-xl border border-slate-100 flex gap-4">
+                                        <div className="shrink-0 mt-1">
+                                            <Lightbulb className="text-amber-500" size={24} />
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-slate-900 mb-1">Key Insight</h4>
+                                            <p className="text-slate-600 text-base m-0">
+                                                {day.summary} Focus on understanding the *why* before the *how*.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </motion.div>
+
+                </div>
+            </div>
+
+            {/* Sticky Bottom Footer */}
+            <div className="fixed bottom-0 left-0 md:left-[var(--sidebar-width)] right-0 p-6 bg-white/90 backdrop-blur-xl border-t border-slate-200 z-40">
+                <div className="max-w-4xl mx-auto flex items-center justify-between">
+                    <div className="hidden md:flex flex-col">
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Status</span>
+                        <span className={`text-sm font-semibold ${isCompleted ? 'text-green-600' : 'text-slate-600'}`}>
+                            {isCompleted ? "✅ Lesson Completed" : "In Progress"}
+                        </span>
+                    </div>
+
+                    <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
                         <button
-                            onClick={() => navigate(`/day/${dayNum + 1}`)}
-                            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-teal-500/20 active:transform active:scale-95 ${isCompleted
-                                    ? 'bg-[var(--brand-primary)] text-white hover:opacity-90'
-                                    : 'bg-slate-100 text-slate-300 cursor-not-allowed hidden' // Hide next until complete? Optional. Let's make it always visible but prominent.
+                            onClick={toggleComplete}
+                            className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold transition-all border ${isCompleted
+                                ? 'bg-green-50 border-green-200 text-green-700 hover:bg-green-100'
+                                : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300'
                                 }`}
                         >
-                            {isCompleted ? 'Next Lesson' : 'Next'} <ChevronRight size={18} />
+                            <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${isCompleted ? 'border-green-600 bg-green-600 text-white' : 'border-slate-300'}`}>
+                                {isCompleted && <Check size={12} strokeWidth={3} />}
+                            </div>
+                            {isCompleted ? "Completed" : "Mark Complete"}
                         </button>
-                    ) : (
-                        <div className="px-6 py-3 font-bold text-[var(--brand-primary)]">🎉 Course Finished!</div>
-                    )}
 
-                    {/* Fallback Next button if user doesn't want to complete */}
-                    {!isCompleted && hasNext && (
-                        <button
-                            onClick={() => navigate(`/day/${dayNum + 1}`)}
-                            className="px-6 py-3 rounded-xl font-bold text-[var(--brand-primary)] bg-[var(--brand-light)] hover:bg-teal-200 transition-colors"
-                        >
-                            Next <ChevronRight className="inline" size={16} />
-                        </button>
-                    )}
+                        {hasNext && (
+                            <button
+                                onClick={() => navigate(`/day/${dayNum + 1}`)}
+                                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold bg-slate-900 text-white hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/20 active:scale-95"
+                            >
+                                Next Lesson <ChevronRight size={18} />
+                            </button>
+                        )}
+                        {!hasNext && isCompleted && (
+                            <div className="px-5 py-3 font-bold text-blue-600">🎉 Course Finished!</div>
+                        )}
+                    </div>
                 </div>
             </div>
 
