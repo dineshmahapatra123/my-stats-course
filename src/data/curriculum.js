@@ -1,321 +1,290 @@
-const curriculum30 = [
-  // --- ACT I: THE DETECTIVE'S TOOLKIT (Exploration & Visualization) ---
+export const curriculum = [
+  // --- ACT I: THE DETECTIVE (Days 1-12) ---
   {
     day: 1,
-    phase: "The Detective's Toolkit",
-    title: "The Lie Detector",
-    summary: "Statistics isn't just math; it's a bullshit detector. Learn how to interrogate raw information.",
-    hook: "Most people accept numbers at face value. You are going to learn why that's a mistake.",
+    phase: "1. The Detective",
+    title: "Data: The Raw Material",
+    summary: "Distinguish Categorical vs Numerical. The foundation of everything.",
+    ai_prompt: "Quiz me on data types with tricky examples.",
     content: `
-      <h3>The Two Types of Truth</h3>
-      <p>Data comes at you in two disguises. Learning to spot them instantly is your first superpower.</p>
+      <h3>Understanding Data Types</h3>
+      <p>Before you can analyze data, you must understand what <em>type</em> of data you are holding. Treat data types like physical materials: you can weld steel (numerical), but you can't weld wood (categorical).</p>
       
       <div class="concept-card">
-        <h4>1. Categorical (The Labels)</h4>
-        <p>This is "Qualitative". It describes <em>what</em> something is. 
-        <br><em>Examples:</em> "Titanic Survivor", "Spam Email", "Red Ferrari".
-        <br><strong>The Trap:</strong> You can't average these. Don't try to find the "mean zip code".</p>
+        <h4>1. Categorical (Qualitative)</h4>
+        <p>Describes qualities or characteristics. It answers "What?"</p>
+        <ul>
+          <li><strong>Nominal:</strong> Names with no order. (e.g., Apple, Banana, Tesla).</li>
+          <li><strong>Ordinal:</strong> Categories with a clear order. (e.g., Low, Medium, High; Gold, Silver, Bronze).</li>
+        </ul>
       </div>
 
       <div class="concept-card">
-        <h4>2. Numerical (The Counts)</h4>
-        <p>This is "Quantitative". It describes <em>how much</em>.
-        <br><em>Examples:</em> $140,000 salary, 1.4 seconds, 98.6 degrees.
-        <br><strong>The Trap:</strong> Not all numbers are the same. A 5-star rating (Ordinal) is different from a temperature (Interval).</p>
+        <h4>2. Numerical (Quantitative)</h4>
+        <p>Describes quantities. It answers "How much?"</p>
+        <ul>
+          <li><strong>Discrete:</strong> Counted integers. (e.g., Number of children, website clicks). You can't have 2.5 children.</li>
+          <li><strong>Continuous:</strong> Measured values. (e.g., Height, Temperature, Time). Infinite precision is possible.</li>
+        </ul>
       </div>
-    `,
-    mental_model: "Think of Data as a lineup of suspects. Some have nametags (Categorical), some have height measurements (Numerical). Proceed accordingly.",
-    example: {
-      title: "The Coffee Shop Interrogation",
-      description: "We surveyed 3 customers. Look at how the data types differ:",
-      data: [
-        { type: "Latte", size: "Medium", cost: 4.50, category: "Categorical" },
-        { type: "Espresso", size: "Small", cost: 2.50, category: "Numerical" },
-        { type: "Cappuccino", size: "Large", cost: 5.00, category: "Both" } // Simplified for chart
-      ]
-    },
-    ai_prompt: "I am a beginner in data science. Act as a harsh but fair mentor. Quiz me on the difference between Nominal, Ordinal, Interval, and Ratio data types using high-stakes scenarios (like medical triage or stock market crashes).",
-    homework: "Open your bank statement. classify every column as Nominal, Ordinal, Interval, or Ratio."
+
+      <div class="tip-box">
+        <strong>Pro Tip:</strong> Always check your data types first. A common error is treating a "Zip Code" as a number. It looks like a number, but it's actually a Nominal Category (a label). You wouldn't calculate the "average zip code" of a region!
+      </div>
+    `
   },
   {
     day: 2,
-    phase: "The Detective's Toolkit",
-    title: "Visual Deception",
-    summary: "A chart can tell a lie faster than a spreadsheet. Learn the rules of visual honesty.",
-    hook: "The human eye is easily hacked. Here is how to defend yourself.",
+    phase: "1. The Detective",
+    title: "Structured vs Unstructured",
+    summary: "SQL tables vs Images/Text. The modern data landscape.",
+    ai_prompt: "How do we turn text into numbers? Explain TF-IDF simply.",
     content: `
-      <h3>The Golden Rules of Viz</h3>
-      <p>Edward Tufte said it best: 'Maximize the Data-Ink Ratio'. If it doesn't show data, kill it.</p>
-      <ul>
-        <li><strong>No 3D Pies:</strong> They distort perspective. The front slice always looks bigger.</li>
-        <li><strong>Start axes at 0:</strong> (Usually). Truncating the Y-axis is the oldest trick in the news media book to make small changes look huge.</li>
-        <li><strong>Color is Data:</strong> Don't use color just to make it pretty. Use it to highlight the anomaly.</li>
-      </ul>
-    `,
-    mental_model: "A Dashboard is a cockpit. If a light blinks red, it must mean something is wrong, not just that the pilot likes red.",
-    ai_prompt: "Generate 3 examples of 'Dark Patterns' in data visualization used by companies to mislead stakeholders. Explain how to fix each one using Python's Matplotlib or Seaborn.",
-    homework: "Find a 'Bad Chart' on Reddit/r/dataisugly and sketch a fixed version on paper."
+      <h3>The Two Worlds of Data</h3>
+      <p>Data isn't just Excel spreadsheets anymore. We live in the age of Big Data, where 'Unstructured' data dominates.</p>
+
+      <div class="flex gap-4 flex-col md:flex-row my-6">
+        <div class="flex-1 bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <h4 class="text-blue-600 font-bold mb-2">Structured Data</h4>
+          <p class="text-sm">Highly organized, fits in rows and columns.</p>
+          <ul class="text-sm list-disc pl-4 mt-2 text-slate-600">
+            <li>Excel Spreadsheets</li>
+            <li>SQL Databases</li>
+            <li>CSV Files</li>
+          </ul>
+        </div>
+        <div class="flex-1 bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <h4 class="text-purple-600 font-bold mb-2">Unstructured Data</h4>
+          <p class="text-sm">No predefined format, messy, heavy.</p>
+          <ul class="text-sm list-disc pl-4 mt-2 text-slate-600">
+            <li>Emails & Text (NLP)</li>
+            <li>Images & Video (Computer Vision)</li>
+            <li>Audio Files</li>
+          </ul>
+        </div>
+      </div>
+
+      <p><strong>The Challenge:</strong> Computers only understand numbers. To analyze unstructured data, we must <em>transform</em> it into structured numbers (Feature Extraction).</p>
+    `
   },
   {
     day: 3,
-    phase: "The Detective's Toolkit",
-    title: "The Illusion of Average",
-    summary: "Why the 'Mean' is often meaningless and the 'Median' discovers the truth.",
-    hook: "If Bill Gates walks into a bar, everyone becomes a millionaire on average. But nobody can buy a drink.",
+    phase: "1. The Detective",
+    title: "The Art of Sampling",
+    summary: "Populations vs Samples. Why n=1000 is enough for 300 Million.",
+    ai_prompt: "Explain the 'Law of Large Numbers' using a coin flip simulation.",
     content: `
-      <h3>Central Tendency Wars</h3>
-      <p>Most datasets are not 'Normal'. They are skewed. Real life is skewed. Wealth, Twitter followers, Bug counts.</p>
+      <h3>The Magic of Sampling</h3>
+      <p>How can we know who will win the election by asking only 1,000 people? It feels like magic, but it's math.</p>
+      
+      <h4>Population vs. Sample</h4>
       <ul>
-        <li><strong>The Mean (Average):</strong> Fragile. One outlier destroys it.</li>
-        <li><strong>The Median (Middle):</strong> Robust. It ignores the billionaires and listens to the common man.</li>
-        <li><strong>The Mode (Most Common):</strong> The populist. What is everyone actually doing?</li>
+        <li><strong>Population (N):</strong> The entire group you care about (e.g., All users of Netflix).</li>
+        <li><strong>Sample (n):</strong> A subset of the population (e.g., 500 random users).</li>
       </ul>
-    `,
-    mental_model: "The Mean is a delicate vase; the Median is a tank. Use the tank when the terrain is rough (skewed).",
-    ai_prompt: "Create a Python simulation that generates a salary dataset with one extreme outlier. Show me how the Mean shifts drastically while the Median stays stable.",
-    homework: "Calculate the average price of houses in your area. Now find the median. Why is the difference so big?"
+
+      <div class="concept-card">
+        <h4>Randomness is Key</h4>
+        <p>A sample is only useful if it is <strong>Representative</strong>. The best way to achieve this is <strong>Random Sampling</strong>. If you only survey people at a Tech Conference, your data on "average income" will be biased (too high).</p>
+      </div>
+    `
   },
   {
     day: 4,
-    phase: "The Detective's Toolkit",
-    title: "The Spread",
-    summary: "The average hides the risk. Variance and Standard Deviation reveal the danger.",
-    hook: "You can drown in a river that is 3 feet deep on average.",
-    ai_prompt: "Explain Standard Deviation to me using a sharpshooter improving their aim at a target range.",
-    homework: "Look at the stock price of Tesla vs Coca-Cola over 1 year. Which has a higher standard deviation? Why?"
+    phase: "1. The Detective",
+    title: "Visual Lies",
+    summary: "How charts deceive. Axis truncation, 3D effects, and cherry-picking.",
+    ai_prompt: "Show me code to create a misleading chart vs a correct chart.",
+    content: `
+      <h3>Visual Honesty</h3>
+      <p>A chart can lie faster than a spreadsheet. As a data scientist, your job is to expose these lies.</p>
+      
+      <h4>Common Tricks to Watch For:</h4>
+      <ol>
+        <li><strong>Truncated Y-Axis:</strong> Starting the axis at 90 instead of 0 makes a small change (91 to 93) look huge (tripling!).</li>
+        <li><strong>3D Charts:</strong> They distort perspective. The slice at the front always looks bigger than the slice in the back, creating bias.</li>
+        <li><strong>Dual Axes:</strong> Plotting two totally unrelated things (like "Ice Cream Sales" and "Murders") on the same chart to imply connection.</li>
+      </ol>
+
+      <div class="tip-box">
+        <strong>Rule of Thumb:</strong> Maximize the "Data-Ink Ratio". If a pixel on your chart isn't telling a story about data, remove it.
+      </div>
+    `
   },
   {
     day: 5,
-    phase: "The Detective's Toolkit",
-    title: "The Box Plot Whisperer",
-    summary: "The ultimate tool for spotting outliers and understanding the 'shape' of data instantly.",
-    ai_prompt: "Interpret a boxplot for me. What does it mean if the box is squashed but the whiskers are long? What if the median line is at the bottom of the box?",
-    homework: "Generate a boxplot of your daily screen time for the last month. Are there outliers?"
-  },
+    phase: "1. The Detective",
+    title: "Central Tendency",
+    summary: "Mean, Median, Mode. When to use which.",
+    ai_prompt: "Why is Median Salary better than Mean Salary for economic analysis?",
+    content: `
+      <h3>Where is the "Middle"?</h3>
+      <p>The most common question in data is "What is average?". But "Average" (Mean) is dangerous.</p>
 
-  // --- ACT II: THE CASINO (Probability & Chance) ---
+      <div class="concept-card">
+        <h4>The Mean (Average)</h4>
+        <p>Sum of all values / Count. <br><strong>Weakness:</strong> Highly sensitive to outliers. If Bill Gates walks into a bar, the "average" wealth becomes billions, but no one is actually richer.</p>
+      </div>
+
+      <div class="concept-card">
+        <h4>The Median (Middle)</h4>
+        <p>The middle value when sorted. <br><strong>Strength:</strong> Robust against outliers. It represents the "typical" person better in skewed data (like salaries or house prices).</p>
+      </div>
+
+      <p><strong>When to use what?</strong> Any time you have extreme outliers (wealth, followers, prices), use the <strong>Median</strong>.</p>
+    `
+  },
   {
     day: 6,
-    phase: "The Casino",
-    title: "Thinking in Bets",
-    summary: "Nothing is certain. Everything is a probability distribution. Welcome to the uncertain world.",
-    hook: "Stop saying 'This will happen'. Start saying 'There is a 60% chance this happens'.",
+    phase: "1. The Detective",
+    title: "Spread & Variance",
+    summary: "Range, IQR, and Variance. Measuring chaos.",
+    ai_prompt: "Explain Interquartile Range (IQR) and why it helps with outliers.",
     content: `
-      <h3>The Frequentist vs The Bayesian</h3>
-      <p>Probability has a civil war.</p>
+      <h3>Measuring Chaos</h3>
+      <p>Knowing the average is not enough. You need to know the risk. You can drown in a river that is 3 feet deep <em>on average</em>.</p>
+
+      <h4>Metrics of Spread:</h4>
       <ul>
-        <li><strong>Frequentist:</strong> Probability is the long-run frequency. Flip a coin 10,000 times, it approaches 50%.</li>
-        <li><strong>Bayesian:</strong> Probability is a 'Degree of Belief'. I am 90% sure I locked the door. I update this belief when I see the lock.</li>
+        <li><strong>Range:</strong> Max - Min. Simple, but weak (only uses 2 numbers).</li>
+        <li><strong>Variance:</strong> The average squared distance from the Mean. High variance = unstable, chaotic data.</li>
+        <li><strong>IQR (Interquartile Range):</strong> The range of the middle 50% of data. It ignores the freaks at the edges.</li>
       </ul>
-    `,
-    ai_prompt: "Explain the philosophy of Bayesian vs Frequentist statistics using a sports betting analogy.",
-    homework: "Assign a probability percentage to 3 things you plan to do today. Check tonight if they happened. Were you overconfident?"
+    `
   },
+  // ... (More days would follow with similar rich content structure. For brevity in this update, we focus on establishing the pattern.)
   {
     day: 7,
-    phase: "The Casino",
-    title: "Conditional Probability",
-    summary: "How new information changes everything. The foundation of Machine Learning.",
-    hook: "What is the probability it rained, given that the grass is wet? It's not 100%.",
-    ai_prompt: "Teach me Bayes Theorem using the intuitive 'Visual Area' method (drawing squares) instead of just the formula.",
-    homework: "Read about the 'False Positive Paradox' in medical testing."
+    phase: "1. The Detective",
+    title: "Standard Deviation",
+    summary: "The universal yardstick of variation.",
+    ai_prompt: "Explain the 68-95-99.7 rule.",
+    content: `
+      <h3>The Universal Yardstick</h3>
+      <p>How do you compare the "weirdness" of a 7-foot human vs a 70-degree day vs a 1000-point stock drop? You use the Standard Deviation ($\sigma$).</p>
+      
+      <div class="concept-card">
+        <h4>The Empirical Rule (68-95-99.7)</h4>
+        <p>If data is Normal (Bell Curve):</p>
+        <ul>
+          <li><strong>68%</strong> of data falls within 1 SD of the mean.</li>
+          <li><strong>95%</strong> falls within 2 SDs. (The "Normal" zone).</li>
+          <li><strong>99.7%</strong> falls within 3 SDs. (Anything beyond this is an extreme outlier).</li>
+        </ul>
+      </div>
+
+      <p><strong>Mental Model:</strong> Think of SD as the "Average Mistake". If I guess the average, how wrong am I usually? That's the standard deviation.</p>
+    `
   },
   {
     day: 8,
-    phase: "The Casino",
-    title: "The Normal Distribution",
-    summary: "The Bell Curve. Why nature loves mediocrity and symmetry.",
-    hook: "Why are most men similar heights, but net worths vary wildly? The difference between Normal and Power Law distributions.",
-    ai_prompt: "Explain why sums of random variables tend to become Normal (Central Limit Theorem) using a dice roll simulation in Python.",
-    homework: "Find 3 things in your room that follow a Normal Distribution (e.g. length of pencils?)"
+    phase: "1. The Detective",
+    title: "Skewness & Kurtosis",
+    summary: "The shape of the beast. Lopsided data and fat tails.",
+    ai_prompt: "What is 'Leptokurtic'? Does it mean high risk?",
+    content: `
+      <h3>The Shape of Data</h3>
+      <p>Not all bells are perfect curves. Some leans, and some are fat.</p>
+
+      <h4>1. Skewness (The Lean)</h4>
+      <ul>
+        <li><strong>Right Skewed (Positive):</strong> Tail extends right. (e.g., Wealth, income). The Mean > Median.</li>
+        <li><strong>Left Skewed (Negative):</strong> Tail extends left. (e.g., Age at natural death). The Mean < Median.</li>
+      </ul>
+
+      <h4>2. Kurtosis (The Tails)</h4>
+      <ul>
+        <li><strong>Leptokurtic (Fat Tails):</strong> High outliers are more common than normal. <strong>High Risk.</strong> Finance markets are Leptokurtic (Crashes happen more often than predicted).</li>
+        <li><strong>Platykurtic (Thin Tails):</strong> Safe, boring data. Few extremes.</li>
+      </ul>
+    `
   },
   {
     day: 9,
-    phase: "The Casino",
-    title: "The Z-Score",
-    summary: "Comparing apples to oranges by translating them into 'Standard Deviations from the Mean'.",
-    ai_prompt: "If I scored 85 on Math (Mean=70, SD=5) and 90 on History (Mean=85, SD=2), which score is actually better?",
-    homework: "Calculate the Z-score of your height compared to the national average."
+    phase: "1. The Detective",
+    title: "The Box Plot",
+    summary: "The 5-number summary visualized.",
+    ai_prompt: "Generate a boxplot analysis of patient ages.",
+    content: `
+      <h3>The Box Plot Whisperer</h3>
+      <p>The Box & whisker plot is the fastest way to spot outliers and see the "spread" without getting overwhelmed.</p>
+      
+      <div class="concept-card">
+        <h4>The 5-Number Summary:</h4>
+        <ol>
+          <li><strong>Min:</strong> The bottom whisker (excluding outliers).</li>
+          <li><strong>Q1 (25th Percentile):</strong> The bottom of the box.</li>
+          <li><strong>Median (50th Percentile):</strong> The line inside the box.</li>
+          <li><strong>Q3 (75th Percentile):</strong> The top of the box.</li>
+          <li><strong>Max:</strong> The top whisker.</li>
+        </ol>
+      </div>
+      
+      <p><strong>Pro Tip:</strong> If the Median line is not in the center of the box, your data is <em>skewed</em>.</p>
+    `
   },
   {
     day: 10,
-    phase: "The Casino",
-    title: "Sampling Distributions",
-    summary: "The meta-concept. The distribution of the *estimates* themselves.",
-    hook: "We almost never see the Population. We only see a ghost of it through our Sample.",
-    ai_prompt: "This concept is hard. Explain 'Sampling Distribution of the Sample Mean' using an analogy of tasting soup from a giant cauldron.",
-    homework: "Watch a 3Blue1Brown video on the Central Limit Theorem."
+    phase: "1. The Detective",
+    title: "Histograms vs Density",
+    summary: "Viewing the distribution shape.",
+    ai_prompt: "What is Kernel Density Estimation (KDE)?",
+    content: `
+      <h3>Visualizing Distributions</h3>
+      
+      <h4>The Histogram</h4>
+      <p>Bins data into buckets (chunks). Great for raw counts. <br><strong>Risk:</strong> Changing the "Bin Size" can dramatically change the look of the chart (Binning Bias).</p>
+      
+      <h4>Density Plot (KDE)</h4>
+      <p>A smooth line that estimates the shape. It's like throwing a wet blanket over the histogram blocks.</p>
+      
+      <div class="tip-box">
+        <strong>Recommendation:</strong> Always plot both. The Histogram tells the truth about the sample; the KDE guesses the truth about the population.
+      </div>
+    `
   },
-
-  // --- ACT III: THE COURTROOM (Inference & Testing) ---
   {
     day: 11,
-    phase: "The Courtroom",
-    title: "Innocent Until Proven Guilty",
-    summary: "Hypothesis Testing is a trial. The Null Hypothesis is the defendant.",
-    hook: "We never 'prove' a hypothesis is true. We only reject the status quo (The Null).",
+    phase: "1. The Detective",
+    title: "Exploratory Data Analysis (EDA)",
+    summary: "The workflow of getting to know your data.",
+    ai_prompt: "Give me an EDA checklist for a new dataset.",
     content: `
-      <h3>The Trial of the Null</h3>
-      <p><strong>Null Hypothesis ($H_0$):</strong> Nothing is happening. The drug doesn't work. The marketing campaign failed.</p>
-      <p><strong>Alternative Hypothesis ($H_1$):</strong> Something interesting is happening.</p>
-      <p>We assume $H_0$ is true. Then we look at the data. If the data is <em>so weird</em>, so unlikely under $H_0$, we reject it.</p>
-    `,
-    ai_prompt: "Act as a Judge. Explain $H_0$ and $H_1$ using a murder trial context. What is the evidence required for 'Rejecting the Null'?",
-    homework: "Formulate a Null Hypothesis for: 'Does drinking coffee increase productivity?'"
+      <h3>The Detective's Checklist</h3>
+      <p>EDA is not just making charts. It's an interrogation.</p>
+      
+      <h4>The 4-Step Workflow:</h4>
+      <ol>
+        <li><strong>Shape & Structure:</strong> <code>df.shape</code>, <code>df.info()</code>. How much data? What types?</li>
+        <li><strong>Missing Values:</strong> <code>df.isnull().sum()</code>. Is the data broken?</li>
+        <li><strong>Univariate Analysis:</strong> Look at 1 variable at a time using Histograms and Boxplots. Check for outliers.</li>
+        <li><strong>Bivariate Analysis:</strong> Look at relationships. Scatter plots (Num vs Num) and Bar Charts (Cat vs Num).</li>
+      </ol>
+    `
   },
   {
     day: 12,
-    phase: "The Courtroom",
-    title: "The P-Value Controversy",
-    summary: "The most misunderstood number in science. It is NOT the probability that you are right.",
-    hook: "A low p-value is a measure of surprise, not truth.",
-    ai_prompt: "Explain P-Value to a 5-year-old using a cookie jar analogy.",
-    homework: "Find a news article that misinterprets 'statistical significance'."
-  },
-  {
-    day: 13,
-    phase: "The Courtroom",
-    title: "Confidence Intervals",
-    summary: "Embracing uncertainty. Don't give me a number; give me a range.",
-    ai_prompt: "Why is a Confidence Interval better than a Point Estimate? Explain using the concept of 'Margin of Error' in polls.",
-    homework: "Look at a political poll. Find the +/- margin of error."
-  },
-  {
-    day: 14,
-    phase: "The Courtroom",
-    title: "A/B Testing (The T-Test)",
-    summary: "The bread and butter of Tech. Comparing two versions of reality.",
-    ai_prompt: "Walk me through how Netflix uses A/B testing to choose thumbnails. How do they know version B is essentially better?",
-    homework: "Design a simple A/B test for your morning routine. (e.g. Alarm vs No Alarm)."
-  },
-  {
-    day: 15,
-    phase: "The Courtroom",
-    title: "Power & Sample Size",
-    summary: "How much data do I need? Don't start an experiment you can't finish.",
-    hook: "If you don't have enough 'Power', you won't find the effect even if it exists.",
-    ai_prompt: "What is 'Statistical Power'? How does sample size affect it? Use a fishing net analogy.",
-    homework: "Use an online sample size calculator to see how many people you need to detect a 1% conversion lift."
-  },
-
-  // --- ACT IV: THE CRYSTAL BALL (Regression & Prediction) ---
-  {
-    day: 16,
-    phase: "The Crystal Ball",
-    title: "Correlation vs Causation",
-    summary: "Ice cream sales correlated with shark attacks. Does ice cream cause sharks?",
-    hook: "The world is full of spurious correlations. Your job is to find the causal mechanism.",
-    ai_prompt: "Give me 5 hilarious examples of high correlation but zero causation.",
-    homework: "Find a correlation in your life (e.g. sleep vs mood). Is it causal?"
-  },
-  {
-    day: 17,
-    phase: "The Crystal Ball",
-    title: "Linear Regression (The Line)",
-    summary: "Fitting the world to a straight line. $y = mx + b$ is the most powerful equation in data.",
-    ai_prompt: "Explain the concept of 'Residuals' (Errors) in regression. Why do we minimize the *square* of the errors?",
-    homework: "Draw a scatter plot of study hours vs grades. Draw a line of best fit by eye."
-  },
-  {
-    day: 18,
-    phase: "The Crystal Ball",
-    title: "R-Squared",
-    summary: "How well does your model explain the world?",
-    hook: "An $R^2$ of 1.0 is suspicious. An $R^2$ of 0.0 is useless. Where is the sweet spot?",
-    ai_prompt: "Explain $R^2$ as 'The percentage of variance explained'. Use a real estate price analogy.",
-    homework: "Check the $R^2$ of a famous scientific study."
-  },
-  {
-    day: 19,
-    phase: "The Crystal Ball",
-    title: "Multiple Regression",
-    summary: "Real life has more than 1 variable. Juggling multiple inputs.",
-    ai_prompt: "How do we interpret coefficients when there are multiple variables? (Ceteris Paribus - holding all else constant).",
-    homework: "Brainstorm 5 variables that predict the price of a Used Car."
-  },
-  {
-    day: 20,
-    phase: "The Crystal Ball",
-    title: "Logistic Regression",
-    summary: "Predicting a Choice (Yes/No) instead of a Number.",
-    hook: "Linear regression fails when the answer is Binary (Win/Loss). Enter the Sigmoid.",
-    ai_prompt: "Explain why we can't use Linear Regression for classification. What is the Log Odds?",
-    homework: "Think of a binary prediction problem in your job (e.g. Churn vs Stay)."
-  },
-
-  // --- ACT V: THE MATRIX (Beyond & Mastery) ---
-  {
-    day: 21,
-    phase: "The Matrix",
-    title: "Decision Trees",
-    summary: "Mimicking human logic. A flowchart that learns.",
-    ai_prompt: "Explain how a decision tree splits data using 'Gini Impurity'. Keep it simple.",
-    homework: "Draw a decision tree for 'Should I wear a jacket today?'"
-  },
-  {
-    day: 22,
-    phase: "The Matrix",
-    title: "Random Forests",
-    summary: "The Wisdom of Crowds. Why 100 drunk trees are smarter than 1 genius tree.",
-    ai_prompt: "Explain the concept of 'Ensembling'. Why does averaging many weak models create a strong model?",
-    homework: "Research 'Bagging' vs 'Boosting'."
-  },
-  {
-    day: 23,
-    phase: "The Matrix",
-    title: "Bias vs Variance",
-    summary: "The fundamental tradeoff of Machine Learning.",
-    hook: "Overfitting (Memorizing) vs Underfitting (Ignoring). You must find the balance.",
-    ai_prompt: "Explain the Bias-Variance tradeoff using an analogy of a student preparing for an exam (Memorizing vs Understanding).",
-    homework: "Look at a learning curve graph. Identify where overfitting starts."
-  },
-  {
-    day: 24,
-    phase: "The Matrix",
-    title: "Clustering (K-Means)",
-    summary: "Finding tribes in the data without labels.",
-    ai_prompt: "How does K-Means allow us to segment customers without knowing the segments beforehand?",
-    homework: "Imagine a dataset of grocery purchases. Name 3 clusters you might find."
-  },
-  {
-    day: 25,
-    phase: "The Matrix",
-    title: "Ethics & Bias",
-    summary: "With great power comes great responsibility. Algorithms can be racist/sexist.",
-    hook: "Data is historic. History is biased. Therefore, your model is biased.",
-    ai_prompt: "Give natural examples of 'Selection Bias' in data collection that led to failed products.",
-    homework: "Read the ProPublica article on the COMPAS algorithm."
-  },
-  { day: 26, phase: "The Matrix", title: "Project: Titanic Survival", summary: "Apply everything. Cleaning, EDA, Modeling.", ai_prompt: "Outline a full workflow for the Titanic Kaggle competition." },
-  { day: 27, phase: "The Matrix", title: "Project: House Prices", summary: "Regression capstone. Feature Engineering is key.", ai_prompt: "Suggest 3 creative 'Derived Features' for a real estate dataset." },
-  { day: 28, phase: "The Matrix", title: "Communicating Results", summary: "Don't show code. Show value. Storytelling with Data.", ai_prompt: "How do I explain 'Confidence Level' to a CEO who hates math?", homework: "Take a complex concept and explain it in 3 bullet points." },
-  { day: 29, phase: "The Matrix", title: "The Road Ahead", summary: "SQL, Python, Deep Learning. Where to go next.", ai_prompt: "Create a 6-month roadmap for becoming a Senior Data Scientist from here.", homework: "Update your LinkedIn with your new skills." },
-  { day: 30, phase: "The Matrix", title: "Graduation", summary: "You have the tools. Now go find the truth.", hook: "The world is full of data. Go solve a problem.", ai_prompt: "Write a manifesto for a data-driven life.", homework: "Celebrate!" }
-];
-
-// Replicating/Scaling to 60 days via pattern if needed, but for specific coach content, 30 high-quality days is better than 60 fluff days. 
-// USER ASKED FOR 60 DAYS. I will map the 5 phases to 60 days by expanding the topics.
-// (For the sake of this file update, I will keep the 30-day intensive structure but map them to the User's request or stick to the defined 60 in previous turn.
-// Actually, to make it 'Best Possible', I will condense to a high-impact 30-day 'Crash Course' OR expand.
-// Given the user constraint '60 day learning extensive course', I will programmatically double the depth or content.
-// However, writing 60 unique 'Coach' entries takes space. I will focus on the structure above as the 'Core' and duplicate/expand automatically or keep it as a '30-Day Intensive' which is often better.
-// WAIT - The user explicitly said "60 day". I should stick to 60.
-// I will expand the above array to cover 60 days by splitting topics.)
-
-export const curriculum60 = [
-  // --- ACT I: THE DETECTIVE (Days 1-12) ---
-  { day: 1, phase: "1. The Detective", title: "Data: The Raw Material", summary: "Distinguish Categorical vs Numerical. The foundation of everything.", ai_prompt: "Quiz me on data types with tricky examples." },
-  { day: 2, phase: "1. The Detective", title: "Structured vs Unstructured", summary: "SQL tables vs Images/Text. The modern data landscape.", ai_prompt: "How do we turn text into numbers? Explain TF-IDF simply." },
-  { day: 3, phase: "1. The Detective", title: "The Art of Sampling", summary: "Populations vs Samples. Why n=1000 is enough for 300 Million.", ai_prompt: "Explain the 'Law of Large Numbers' using a coin flip simulation." },
-  { day: 4, phase: "1. The Detective", title: "Visual Lies", summary: "How charts deceive. Axis truncation, 3D effects, and cherry-picking.", ai_prompt: "Show me code to create a misleading chart vs a correct chart." },
-  { day: 5, phase: "1. The Detective", title: "Central Tendency", summary: "Mean, Median, Mode. When to use which.", ai_prompt: "Why is Median Salary better than Mean Salary for economic analysis?" },
-  { day: 6, phase: "1. The Detective", title: "Spread & Variance", summary: "Range, IQR, and Variance. Measuring chaos.", ai_prompt: "Explain Interquartile Range (IQR) and why it helps with outliers." },
-  { day: 7, phase: "1. The Detective", title: "Standard Deviation", summary: "The universal yardstick of variation.", ai_prompt: "Explain the 68-95-99.7 rule." },
-  { day: 8, phase: "1. The Detective", title: "Skewness & Kurtosis", summary: "The shape of the beast. Lopsided data and fat tails.", ai_prompt: "What is 'Leptokurtic'? Does it mean high risk?" },
-  { day: 9, phase: "1. The Detective", title: "The Box Plot", summary: "The 5-number summary visualized.", ai_prompt: "Generate a boxplot analysis of patient ages." },
-  { day: 10, phase: "1. The Detective", title: "Histograms vs Density", summary: "Viewing the distribution shape.", ai_prompt: "What is Kernel Density Estimation (KDE)?" },
-  { day: 11, phase: "1. The Detective", title: "Exploratory Data Analysis (EDA)", summary: "The workflow of getting to know your data.", ai_prompt: "Give me an EDA checklist for a new dataset." },
-  { day: 12, phase: "1. The Detective", title: "Capstone: EDA", summary: "Apply Act I skills to a real dataset.", ai_prompt: "Review my EDA code. What did I miss?" },
+    phase: "1. The Detective",
+    title: "Capstone: EDA",
+    summary: "Apply Act I skills to a real dataset.",
+    ai_prompt: "Review my EDA code. What did I miss?",
+    content: `
+      <h3>Capstone: The Titanic Dataset</h3>
+      <p><strong>Objective:</strong> Use everything you've learned to analyze the Titanic passenger list.</p>
+      
+      <div class="concept-card">
+        <h4>Mission Checklist:</h4>
+        <ul class="list-disc pl-4">
+          <li><strong>Identify Types:</strong> Which columns are Categorical? Numerical?</li>
+          <li><strong>Find Deception:</strong> Are there missing ages? How do we handle them?</li>
+          <li><strong>Central Tendency:</strong> What was the median fare paid? (Median is better than Mean here!)</li>
+          <li><strong>Visualization:</strong> Create a Boxplot of Age vs Survival. Did younger people survive more?</li>
+        </ul>
+      </div>
+      
+      <p><em>Use the AI Tutor to guide you through loading the dataset in Python/Pandas.</em></p>
+    `
+  }
 
   // --- ACT II: THE GAMBLER (Days 13-24) ---
   { day: 13, phase: "2. The Gambler", title: "Probability Basics", summary: "Sample spaces, events, and independence.", ai_prompt: "Explain 'Mutually Exclusive' vs 'Independent' events." },
@@ -373,5 +342,3 @@ export const curriculum60 = [
   { day: 59, phase: "5. The Architect", title: "Ethics and Bias", summary: "Responsible AI.", ai_prompt: "Discuss algorithmic bias in hiring." },
   { day: 60, phase: "5. The Architect", title: "The End & The Beginning", summary: "Your roadmap to the future.", ai_prompt: "Create a 6-month specialized learning path (e.g. NLP, Computer Vision)." }
 ];
-
-export const curriculum = curriculum60;
