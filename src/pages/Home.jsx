@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { curriculum } from '../data/curriculum';
 import { ChevronRight, Play, Star, Clock, Trophy } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
 
 const Home = () => {
     // Group days by phase
@@ -120,7 +120,6 @@ const Home = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                                 {days.map(day => {
                                     const isDone = localStorage.getItem(`day-${day.day}-completed`);
-                                    const isLocked = !isDone && day.day > nextLesson.day; // Optional: Lock future lessons? For now just visual style.
 
                                     return (
                                         <motion.div variants={item} key={day.day}>

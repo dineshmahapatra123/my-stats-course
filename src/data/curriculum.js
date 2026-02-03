@@ -161,7 +161,7 @@ export const curriculum = [
     ai_prompt: "Explain the 68-95-99.7 rule.",
     content: `
       <h3>The Universal Yardstick</h3>
-      <p>How do you compare the "weirdness" of a 7-foot human vs a 70-degree day vs a 1000-point stock drop? You use the Standard Deviation ($\sigma$).</p>
+      <p>How do you compare the "weirdness" of a 7-foot human vs a 70-degree day vs a 1000-point stock drop? You use the Standard Deviation ($\\sigma$).</p>
       
       <div class="concept-card">
         <h4>The Empirical Rule (68-95-99.7)</h4>

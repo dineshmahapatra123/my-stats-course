@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { curriculum } from '../data/curriculum';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import {
     ArrowLeft, ChevronRight, ChevronLeft,
     BookOpen, Zap, Compass, Copy, Check, Terminal,
