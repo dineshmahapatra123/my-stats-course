@@ -284,7 +284,7 @@ export const curriculum = [
       
       <p><em>Use the AI Tutor to guide you through loading the dataset in Python/Pandas.</em></p>
     `
-  }
+  },
 
   // --- ACT II: THE GAMBLER (Days 13-24) ---
   { day: 13, phase: "2. The Gambler", title: "Probability Basics", summary: "Sample spaces, events, and independence.", ai_prompt: "Explain 'Mutually Exclusive' vs 'Independent' events." },

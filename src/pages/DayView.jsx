@@ -13,19 +13,16 @@ const DayView = () => {
     const navigate = useNavigate();
     const dayNum = parseInt(dayId, 10);
     const day = curriculum.find(d => d.day === dayNum);
-    const [copied, setCopied] = useState(false);
-    const [isCompleted, setCompleted] = useState(false);
+    const [hasNext, hasPrev] = [dayNum < curriculum.length, dayNum > 1];
 
-    // Navigation Logic
-    const hasNext = dayNum < curriculum.length;
-    const hasPrev = dayNum > 1;
+    const [copied, setCopied] = useState(false);
+    const [isCompleted, setCompleted] = useState(() => {
+        return !!localStorage.getItem(`day-${dayNum}-completed`);
+    });
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        const done = localStorage.getItem(`day-${dayNum}-completed`);
-        if (done) setCompleted(true);
-        else setCompleted(false);
-    }, [dayId, dayNum]);
+    }, [dayId]);
 
     const toggleComplete = () => {
         if (isCompleted) {
