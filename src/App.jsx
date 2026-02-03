@@ -21,7 +21,7 @@ function App() {
   // Check if we are hosting on GitHub pages, usually involves a base path.
   // For now, standard router.
   return (
-    <Router>
+    <Router basename="/my-stats-course">
       <Layout>
         <AnimatedRoutes />
       </Layout>
